@@ -1,0 +1,5 @@
+Model,MAE (INR),RMSE (INR),R² (INR),R² (log),Waktu (detik)
+Multiple Linear Regression,4935.315,9053.8176,0.841,0.9246,0.4784
+Decision Tree (depth=25),1217.7356,2997.5339,0.9826,0.98,2.2316
+KNN Regression (k=3),1785.7801,3855.6922,0.9712,0.9747,67.0936
+MLR per kelas,3209.7491,5673.0095,0.9376,0.9424,0.5717

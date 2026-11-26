@@ -1,0 +1,11 @@
+# Dashboard
+streamlit>=1.50
+pandas
+numpy
+joblib
+scikit-learn==1.6.1
+
+# Notebook (EDA & modeling)
+matplotlib
+seaborn
+statsmodels
