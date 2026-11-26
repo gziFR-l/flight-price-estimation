@@ -29,8 +29,8 @@ Faktor paling berpengaruh: **kelas** (Business ≈ 7,7× Economy), lalu **waktu 
 flight-price-estimation/
 ├── configs/          # parameter preprocessing & model (config.yaml)
 ├── data/
-│   ├── raw/          # Clean_Dataset.csv dari Kaggle (tidak di-commit)
-│   └── processed/    # train.csv & test.csv hasil preprocessing (tidak di-commit)
+│   ├── raw/          # Clean_Dataset.csv dari Kaggle
+│   └── processed/    # train.csv & test.csv hasil preprocessing
 ├── docs/             # laporan, slide presentasi, dokumen pendukung
 ├── notebooks/        # 01_EDA → 02_Preprocessing → 03_Modeling_Evaluasi
 ├── outputs/
@@ -45,7 +45,7 @@ flight-price-estimation/
 ## Dataset
 [Flight Price Prediction](https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction) (Kaggle, Shubham Bathwal): ±300 ribu data tiket penerbangan domestik antar 6 kota besar di India, harga dalam rupee (₹).
 
-Dataset tidak disimpan di repo. Unduh dari Kaggle, lalu letakkan `Clean_Dataset.csv` di `data/raw/`.
+Dataset sudah tersedia di repo: data asli di `data/raw/Clean_Dataset.csv`, hasil preprocessing di `data/processed/`. Penjelasan setiap kolom ada di [`data/README.md`](data/README.md).
 
 ## Cara menjalankan
 
