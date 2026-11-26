@@ -1,9 +1,3 @@
-# Data (unduh sendiri dari Kaggle, lihat README)
-data/raw/*
-data/processed/*
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
 # Lingkungan Python
 .venv/
 venv/
