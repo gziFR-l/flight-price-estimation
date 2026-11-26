@@ -2,9 +2,9 @@
 Dashboard Estimasi Harga Tiket Pesawat
 TBP Data Mining — model Decision Tree Regression (target: log harga)
 
-Jalankan dari folder utama repo:  streamlit run scripts/app.py
-Membaca model dari outputs/models/ (model_dt.joblib, fitur_dt.json)
-dan tabel hasil dari outputs/results/ (perbandingan_model.csv, pengaruh_per_kelas_mlr.csv)
+Jalankan:  streamlit run app.py
+File yang harus ada di folder yang sama: model_dt.joblib, fitur_dt.json
+(opsional: perbandingan_model.csv, pengaruh_per_kelas_mlr.csv dari folder Evaluasi)
 """
 import json
 import os
@@ -15,9 +15,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # folder utama repo
-MODEL_DIR = os.path.join(ROOT, "outputs", "models")
-RESULT_DIR = os.path.join(ROOT, "outputs", "results")
+HERE = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(page_title="Estimasi Harga Tiket Pesawat", page_icon="✈️", layout="wide")
 
@@ -25,8 +23,8 @@ st.set_page_config(page_title="Estimasi Harga Tiket Pesawat", page_icon="✈️"
 # ---------- memuat model ----------
 @st.cache_resource
 def muat_model():
-    model = joblib.load(os.path.join(MODEL_DIR, "model_dt.joblib"))
-    with open(os.path.join(MODEL_DIR, "fitur_dt.json")) as f:
+    model = joblib.load(os.path.join(HERE, "model_dt.joblib"))
+    with open(os.path.join(HERE, "fitur_dt.json")) as f:
         fitur = json.load(f)
     return model, fitur
 
@@ -41,7 +39,7 @@ LABEL_SLOT = {
     "Early_Morning": "Dini pagi", "Morning": "Pagi", "Afternoon": "Siang",
     "Evening": "Sore", "Night": "Malam", "Late_Night": "Larut malam",
 }
-LABEL_STOPS = {0: "Langsung", 1: "1 transit", 2: "2+ transit"}  # label pendek agar tidak terpotong di sidebar
+LABEL_STOPS = {0: "Langsung (tanpa transit)", 1: "1 transit", 2: "2 transit atau lebih"}
 DURASI_DEFAULT = {0: 2.2, 1: 11.0, 2: 16.0}  # perkiraan awal, bisa diubah pengguna
 
 
@@ -129,18 +127,18 @@ with tab1:
 
 with tab2:
     st.subheader("Perbandingan model")
-    path_tabel = os.path.join(RESULT_DIR, "perbandingan_model.csv")
+    path_tabel = os.path.join(HERE, "perbandingan_model.csv")
     if os.path.exists(path_tabel):
         st.dataframe(pd.read_csv(path_tabel, index_col=0), width="stretch")
     else:
-        st.info("File `outputs/results/perbandingan_model.csv` belum ada.")
+        st.info("Salin `perbandingan_model.csv` dari folder Evaluasi ke folder ini untuk menampilkan tabel.")
 
     st.subheader("Pengaruh tiap faktor terhadap harga (MLR per kelas)")
-    path_efek = os.path.join(RESULT_DIR, "pengaruh_per_kelas_mlr.csv")
+    path_efek = os.path.join(HERE, "pengaruh_per_kelas_mlr.csv")
     if os.path.exists(path_efek):
         efek = pd.read_csv(path_efek, index_col=0)
         st.dataframe(efek.style.format("{:+.1f}%", na_rep="–"), width="stretch")
         st.caption("Persentase perubahan harga dibanding kategori baseline: maskapai AirAsia (Economy) / "
                    "Air India (Business), pemesanan ≥16 hari, per tambahan 1 transit, per tambahan 1 jam durasi.")
     else:
-        st.info("File `outputs/results/pengaruh_per_kelas_mlr.csv` belum ada.")
+        st.info("Salin `pengaruh_per_kelas_mlr.csv` dari folder Evaluasi ke folder ini untuk menampilkan tabel.")
